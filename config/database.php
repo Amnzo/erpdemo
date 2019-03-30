@@ -1,7 +1,9 @@
 <?php
 
-return [
+$DATABASE_URL = parse_url('postgres://aahhebwlqtxjcv:f9cc8ccde00f6719a5d6ed198e02c9ddf68bc85630b7a327326abb7d561d9b5e@ec2-23-23-241-119.compute-1.amazonaws.com:5432/d1gltri4m3mm46');
 
+return [
+ 
     /*
     |--------------------------------------------------------------------------
     | PDO Fetch Style
@@ -26,7 +28,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -76,15 +78,15 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $DATABASE_URL["host"],
+            'port' => $DATABASE_URL["port"],
+            'database' => ltrim($DATABASE_URL["path"], "/"),
+            'username' => $DATABASE_URL["user"],
+            'password' => $DATABASE_URL["pass"],
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-            'sslmode' => 'prefer',
+            'sslmode' => 'require',
         ],
 
     ],
